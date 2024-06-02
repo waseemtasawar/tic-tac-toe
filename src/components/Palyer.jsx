@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const Palyer = ({ initialName, symbol }) => {
+const Palyer = ({ initialName, symbol, isActive }) => {
   const [palyerName, setPalyerName] = useState(initialName);
   const [isEditing, setIsEditing] = useState(false);
 
@@ -21,7 +21,7 @@ const Palyer = ({ initialName, symbol }) => {
     // buttonCaption = "Save";
   }
   return (
-    <li>
+    <li className={isActive ? "active" : undefined}>
       <span className="player">
         {editedPalyerName}
         <span className="player-symbol">{symbol}</span>
