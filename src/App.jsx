@@ -1,4 +1,5 @@
 import Palyer from "./components/Palyer";
+import GameBoard from "./components/GameBoard";
 function App() {
   return (
     <main>
@@ -7,7 +8,7 @@ function App() {
           <Palyer initialName="Palyer 1" symbol="X" />
           <Palyer initialName="Palyer 2" symbol="O" />
         </ol>
-        game Borad LOg
+        <GameBoard />
       </div>
     </main>
   );
