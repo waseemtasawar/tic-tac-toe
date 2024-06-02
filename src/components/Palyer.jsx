@@ -1,24 +1,32 @@
 import React, { useState } from "react";
 
-const Palyer = ({ name, symbol }) => {
+const Palyer = ({ initialName, symbol }) => {
+  const [palyerName, setPalyerName] = useState(initialName);
   const [isEditing, setIsEditing] = useState(false);
 
-  function HandleEditing() {
-    setIsEditing(true);
+  function handleEditing() {
+    setIsEditing((editing) => !editing);
   }
-  let palyerName = <span className="palyer-name">{name}</span>;
+
+  function handleChange(event) {
+    setPalyerName(event.target.value);
+  }
+
+  let editedPalyerName = <span className="palyer-name">{palyerName}</span>;
   //   let buttonCaption = "Edit";
   if (isEditing) {
-    palyerName = <input type="text" required />;
+    editedPalyerName = (
+      <input type="text" value={palyerName} required onChange={handleChange} />
+    );
     // buttonCaption = "Save";
   }
   return (
     <li>
       <span className="player">
-        {palyerName}
+        {editedPalyerName}
         <span className="player-symbol">{symbol}</span>
       </span>
-      <button onClick={HandleEditing}>{isEditing ? "Save" : "Edit"}</button>
+      <button onClick={handleEditing}>{isEditing ? "Save" : "Edit"}</button>
     </li>
   );
 };
