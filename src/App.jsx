@@ -1,11 +1,25 @@
 import Palyer from "./components/Palyer";
 import GameBoard from "./components/GameBoard";
+import Log from "./components/Log";
 import { useState } from "react";
 function App() {
   const [activePalyer, setActivePlayer] = useState("X");
+  const [gameTurns, setGameTurns] = useState([]);
 
-  function handleSelectedPlayer() {
+  function handleSelectedPlayer(rowIndex, colIndex) {
     setActivePlayer((curActivePlayer) => (curActivePlayer === "X" ? "O" : "X"));
+    setGameTurns((prevTurns) => {
+      let currentPlayer = "X";
+      if (prevTurns.length > 0 && prevTurns[0].player === "X") {
+        currentPlayer = "O";
+      }
+
+      const updatedTurns = [
+        { square: { row: rowIndex, col: colIndex }, player: currentPlayer },
+        ...prevTurns,
+      ];
+      return updatedTurns;
+    });
   }
   return (
     <main>
@@ -22,11 +36,9 @@ function App() {
             isActive={activePalyer === "O"}
           />
         </ol>
-        <GameBoard
-          onSelectSquare={handleSelectedPlayer}
-          activePlayerSymbol={activePalyer}
-        />
+        <GameBoard onSelectSquare={handleSelectedPlayer} turns={gameTurns} />
       </div>
+      <Log />
     </main>
   );
 }
