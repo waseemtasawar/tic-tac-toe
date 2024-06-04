@@ -1,28 +1,29 @@
 import React, { useState } from "react";
+
 const initialGameBoard = [
   [null, null, null],
   [null, null, null],
   [null, null, null],
 ];
-const GameBoard = ({ onSelectSquare, turns }) => {
-  let gameBoard = initialGameBoard;
-  for (const turn in turns) {
-    const { square, player } = turn;
-    const { row, col } = square;
 
-    gameBoard[row][col] = player;
-  }
-  // const [gameBoard, setGameBoard] = useState(initialGameBoard);
-  // function handleSelectSquare(rowIndex, colIndex) {
-  //   setGameBoard((prevGameBoard) => {
-  //     const updatedBoard = [
-  //       ...prevGameBoard.map((innerArray) => [...innerArray]),
-  //     ];
-  //     updatedBoard[rowIndex][colIndex] = activePlayerSymbol;
-  //     return updatedBoard;
-  //   });
-  //   onSelectSquare();
-  // }
+const GameBoard = ({ onSelectSquare, turns }) => {
+  const [gameBoard, setGameBoard] = useState(initialGameBoard);
+
+  // Update gameBoard state based on turns
+  React.useEffect(() => {
+    const updatedBoard = [...initialGameBoard];
+    for (const turn of turns) {
+      const { square, player } = turn;
+      if (square && square.row !== undefined && square.col !== undefined) {
+        updatedBoard[square.row][square.col] = player;
+      } else {
+        // Handle unexpected data format (optional)
+        console.error("Invalid turn data:", turn);
+      }
+    }
+    setGameBoard(updatedBoard);
+  }, [turns]);
+
   return (
     <ol id="game-board">
       {gameBoard.map((row, rowIndex) => (

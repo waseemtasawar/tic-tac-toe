@@ -2,6 +2,7 @@ import Palyer from "./components/Palyer";
 import GameBoard from "./components/GameBoard";
 import Log from "./components/Log";
 import { useState } from "react";
+
 function App() {
   const [activePalyer, setActivePlayer] = useState("X");
   const [gameTurns, setGameTurns] = useState([]);
@@ -18,9 +19,11 @@ function App() {
         { square: { row: rowIndex, col: colIndex }, player: currentPlayer },
         ...prevTurns,
       ];
+
       return updatedTurns;
     });
   }
+
   return (
     <main>
       <div id="game-container">
@@ -38,7 +41,7 @@ function App() {
         </ol>
         <GameBoard onSelectSquare={handleSelectedPlayer} turns={gameTurns} />
       </div>
-      <Log />
+      <Log turns={gameTurns} />
     </main>
   );
 }
