@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 
-const Palyer = ({ initialName, symbol, isActive }) => {
+const Palyer = ({ initialName, symbol, isActive, onChangeName }) => {
   const [palyerName, setPalyerName] = useState(initialName);
   const [isEditing, setIsEditing] = useState(false);
 
   function handleEditing() {
     setIsEditing((editing) => !editing);
+    if (isEditing) {
+      onChangeName(symbol, palyerName);
+    }
   }
 
   function handleChange(event) {
